@@ -6,8 +6,6 @@ const app = express()
 app.use(bodyParser.json())
 
 app.get('/webhook', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log('it works')
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === 'advekcw4t93409tuqw') {
     // eslint-disable-next-line no-console
@@ -28,8 +26,6 @@ function receivedMessage(event) {
 
 app.post('/webhook', (req, res) => {
   const data = req.body
-  // eslint-disable-next-line no-console
-  console.log(data)
   // Make sure this is a page subscription
   if (data.object === 'page') {
     // Iterate over each entry - there may be multiple if batched

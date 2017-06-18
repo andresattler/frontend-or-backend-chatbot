@@ -15,8 +15,6 @@ var app = (0, _express2.default)();
 app.use(_bodyParser2.default.json());
 
 app.get('/webhook', function (req, res) {
-  // eslint-disable-next-line no-console
-  console.log('it works');
   if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === 'advekcw4t93409tuqw') {
     // eslint-disable-next-line no-console
     console.log('Validating webhook');
@@ -36,10 +34,8 @@ function receivedMessage(event) {
 
 app.post('/webhook', function (req, res) {
   var data = req.body;
-  // eslint-disable-next-line no-console
-  console.log(data
   // Make sure this is a page subscription
-  );if (data.object === 'page') {
+  if (data.object === 'page') {
     // Iterate over each entry - there may be multiple if batched
     data.entry.forEach(function (entry) {
       // const pageID = entry.id
