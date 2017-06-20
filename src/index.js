@@ -1,24 +1,52 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import request from 'request'
 
 const app = express()
+
+const token = process.env.FB_PAGE_ACCESS_TOKEN
 
 app.use(bodyParser.json())
 
 app.get('/webhook', (req, res) => {
-  if (req.query['hub.mode'] === 'subscribe' &&
-      req.query['hub.verify_token'] === 'advekcw4t93409tuqw') {
-    // eslint-disable-next-line no-console
-    console.log('Validating webhook')
+  if (req.query['hub.verify_token'] === 'advekcw4t93409tuqw') {
     res.status(200).send(req.query['hub.challenge'])
   } else {
-    // eslint-disable-next-line no-console
-    console.error('Failed validation. Make sure the validation tokens match.')
     res.sendStatus(403)
   }
 })
 
+function sendTextMessage(recipientId) {
+  request({
+    uri: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: token },
+    method: 'POST',
+    json: {
+      recipient: {
+        id: recipientId,
+      },
+      message: {
+        text: 'Hello World!',
+      },
+    },
+  }, (error, response) => {
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error sending messages: ', error)
+    } else if (response.body.error) {
+      // eslint-disable-next-line no-console
+      console.error('Error: ', response.body.error)
+    }
+  })
+}
+
 function receivedMessage(event) {
+  const senderID = event.sender.id
+  const messageText = event.message.text
+
+  if (messageText) {
+    sendTextMessage(senderID)
+  }
   // Putting a stub for now, we'll expand it in the following steps
   // eslint-disable-next-line no-console
   console.log('Message data: ', event.message)
@@ -43,12 +71,6 @@ app.post('/webhook', (req, res) => {
         }
       })
     })
-
-    // Assume all went well.
-    //
-    // You must send back a 200, within 20 seconds, to let us know
-    // you've successfully received the callback. Otherwise, the request
-    // will time out and we will keep trying to resend.
     res.sendStatus(200)
   }
 })
