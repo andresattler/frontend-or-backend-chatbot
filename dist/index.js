@@ -8,12 +8,21 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _mongoose = require('mongoose');
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
 var _recievedMessage = require('./api/recieved-message');
 
 var _recievedMessage2 = _interopRequireDefault(_recievedMessage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+_mongoose2.default.connect(process.env.MONGO_DB_URL);
+var User = _mongoose2.default.model('User', {
+  _id: String,
+  current_state: String
+});
 var app = (0, _express2.default)();
 
 app.use(_bodyParser2.default.json());
@@ -32,6 +41,11 @@ app.post('/webhook', function (req, res) {
     data.entry.forEach(function (entry) {
       entry.messaging.forEach(function (event) {
         if (event.message) {
+          var item = new User({
+            _id: event.sender.id,
+            current_state: String
+          });
+          item.save();
           (0, _recievedMessage2.default)(event);
         } else {
           // eslint-disable-next-line no-console
