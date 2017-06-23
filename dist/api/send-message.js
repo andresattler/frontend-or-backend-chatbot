@@ -12,7 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var token = process.env.FB_PAGE_ACCESS_TOKEN;
 
-function sendTextMessage(recipientId) {
+function sendTextMessage(recipientId, text) {
   (0, _request2.default)({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: token },
@@ -22,7 +22,7 @@ function sendTextMessage(recipientId) {
         id: recipientId
       },
       message: {
-        text: 'Hello World!'
+        text: text
       }
     }
   }, function (error, response) {

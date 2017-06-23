@@ -2,7 +2,7 @@ import request from 'request'
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 
-function sendTextMessage(recipientId) {
+function sendTextMessage(recipientId, text) {
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: token },
@@ -12,7 +12,7 @@ function sendTextMessage(recipientId) {
         id: recipientId,
       },
       message: {
-        text: 'Hello World!',
+        text,
       },
     },
   }, (error, response) => {
