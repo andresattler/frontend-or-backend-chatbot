@@ -20,7 +20,7 @@ function receivedMessage(event) {
         sendTextMessage(senderID, answer)
       } else {
         const user = new User({
-          _id: event.sender.id,
+          id: event.sender.id,
           current_state: 0,
         })
         user.save()
