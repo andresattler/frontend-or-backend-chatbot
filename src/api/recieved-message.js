@@ -1,9 +1,12 @@
 import mongoose from 'mongoose'
+
 import sendTextMessage from './send-message'
+import { welcomeMessage } from './responses'
+import talk from './talk'
 
 const User = mongoose.model('User', {
-  _id: String,
-  current_state: Number,
+  id: String,
+  currentState: Number,
 })
 
 function receivedMessage(event) {
@@ -13,14 +16,15 @@ function receivedMessage(event) {
   if (messageText) {
     User.findById(senderID, (err, userObj) => {
       if (userObj) {
-        sendTextMessage(senderID, 'mongodb rocks!')
+        const answer = talk(userObj.currentState, messageText)
+        sendTextMessage(senderID, answer)
       } else {
         const user = new User({
           _id: event.sender.id,
           current_state: 0,
         })
         user.save()
-        sendTextMessage(senderID, 'Welcome new User!')
+        sendTextMessage(senderID, welcomeMessage)
       }
     })
   }

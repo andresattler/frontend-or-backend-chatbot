@@ -6,7 +6,10 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./dist/",
-    "build": "rimraf dist && babel src -d dist --ignore .test.js"
+    "build": "rimraf dist && babel src -d dist --ignore .test.js",
+    "test": "jest",
+    "precomit": "yarn test",
+    "prepush": "yarn test && yarn build"
   },
   "dependencies": {
     "babel-cli": "^6.24.1",
