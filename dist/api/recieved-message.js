@@ -35,9 +35,7 @@ function receivedMessage(event) {
         var answer = (0, _talk2.default)(userObj.current_state, messageText);
         var nextState = userObj.current_state + 1;
         console.log({ _id: senderID }, { current_state: nextState });
-        User.update({ _id: senderID }, { current_state: nextState }, function (updateErr, user) {
-          console.log(user);
-        }).exec();
+        User.update({ _id: senderID }, { current_state: nextState }).exec();
         (0, _sendMessage2.default)(senderID, answer);
       } else {
         var user = new User({
