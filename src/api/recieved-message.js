@@ -18,9 +18,11 @@ function receivedMessage(event) {
     User.findById(senderID, (err, userObj) => {
       if (userObj) {
         const answer = talk(userObj.current_state, messageText)
-        if (answer.next) {
+        if (answer.type === 'QUESTION') {
           const nextState = userObj.current_state + 1
           User.update({ _id: senderID }, { current_state: nextState }).exec()
+        } else if (answer.type === 'END') {
+          User.findByIdAndRemove(senderID).exec()
         }
         sendTextMessage(senderID, answer.text)
       } else {

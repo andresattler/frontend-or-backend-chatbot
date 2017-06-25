@@ -34,9 +34,11 @@ function receivedMessage(event) {
     User.findById(senderID, function (err, userObj) {
       if (userObj) {
         var answer = (0, _talk2.default)(userObj.current_state, messageText);
-        if (answer.next) {
+        if (answer.type === 'QUESTION') {
           var nextState = userObj.current_state + 1;
           User.update({ _id: senderID }, { current_state: nextState }).exec();
+        } else if (answer.type === 'END') {
+          User.findByIdAndRemove(senderID).exec();
         }
         (0, _sendMessage2.default)(senderID, answer.text);
       } else {

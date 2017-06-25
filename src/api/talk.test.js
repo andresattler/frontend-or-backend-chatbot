@@ -20,10 +20,10 @@ test('initial no', () => {
 test('next question', () => {
   expect(talk(1, 'yes')).toMatchObject({
     text: questions[1],
-    next: true,
+    type: 'QUESTION',
   })
   expect(talk(1, 'no')).toMatchObject({
     text: questions[1],
-    next: true,
+    type: 'QUESTION',
   })
 })
