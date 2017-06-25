@@ -12,11 +12,17 @@ var _sendMessage = require('./send-message');
 
 var _sendMessage2 = _interopRequireDefault(_sendMessage);
 
+var _responses = require('./responses');
+
+var _talk = require('./talk');
+
+var _talk2 = _interopRequireDefault(_talk);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var User = _mongoose2.default.model('User', {
-  _id: String,
-  current_state: Number
+  id: String,
+  currentState: Number
 });
 
 function receivedMessage(event) {
@@ -26,14 +32,15 @@ function receivedMessage(event) {
   if (messageText) {
     User.findById(senderID, function (err, userObj) {
       if (userObj) {
-        (0, _sendMessage2.default)(senderID, 'mongodb rocks!');
+        var answer = (0, _talk2.default)(userObj.currentState, messageText);
+        (0, _sendMessage2.default)(senderID, answer);
       } else {
         var user = new User({
           _id: event.sender.id,
           current_state: 0
         });
         user.save();
-        (0, _sendMessage2.default)(senderID, 'Welcome new User!');
+        (0, _sendMessage2.default)(senderID, _responses.welcomeMessage);
       }
     });
   }
