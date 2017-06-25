@@ -5,8 +5,8 @@ import { welcomeMessage } from './responses'
 import talk from './talk'
 
 const User = mongoose.model('User', {
-  id: String,
-  currentState: Number,
+  _id: String,
+  current_state: Number,
 })
 
 function receivedMessage(event) {
@@ -16,12 +16,12 @@ function receivedMessage(event) {
   if (messageText) {
     User.findById(senderID, (err, userObj) => {
       if (userObj) {
-        const answer = talk(userObj.currentState, messageText)
+        const answer = talk(userObj.current_state, messageText)
         sendTextMessage(senderID, answer)
       } else {
         const user = new User({
-          id: event.sender.id,
-          currentState: 0,
+          _id: event.sender.id,
+          current_state: 0,
         })
         user.save()
         sendTextMessage(senderID, welcomeMessage)
