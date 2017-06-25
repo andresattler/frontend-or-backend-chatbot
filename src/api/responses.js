@@ -7,4 +7,8 @@ export const rejectionMessage = 'Ok then not :) I wish you a nice day!'
 
 export const questions = [
   'first question',
+  'second question',
+  'question 3',
+  'question 4',
+  'question 5',
 ]

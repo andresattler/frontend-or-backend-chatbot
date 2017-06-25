@@ -12,10 +12,10 @@ function talk(currentState, messageText) {
     return _responses.rejectionMessage;
   }
   if (userAnswer === 'yes') {
-    return _responses.questions[0];
+    return _responses.questions[currentState];
   }
   if (userAnswer === 'no') {
-    return _responses.questions[0];
+    return _responses.questions[currentState];
   }
   return _responses.notUnderstood;
 }

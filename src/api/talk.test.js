@@ -16,3 +16,8 @@ test('initial no', () => {
   expect(talk(0, 'No')).toBe(rejectionMessage)
   expect(talk(0, 'NO')).toBe(rejectionMessage)
 })
+
+test('next question', () => {
+  expect(talk(1, 'yes')).toBe(questions[1])
+  expect(talk(1, 'no')).toBe(questions[1])
+})

@@ -6,10 +6,10 @@ function talk(currentState, messageText) {
     return rejectionMessage
   }
   if (userAnswer === 'yes') {
-    return questions[0]
+    return questions[currentState]
   }
   if (userAnswer === 'no') {
-    return questions[0]
+    return questions[currentState]
   }
   return notUnderstood
 }

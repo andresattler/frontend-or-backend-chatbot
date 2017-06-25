@@ -9,4 +9,4 @@ var notUnderstood = exports.notUnderstood = 'Sory I could not understand you';
 
 var rejectionMessage = exports.rejectionMessage = 'Ok then not :) I wish you a nice day!';
 
-var questions = exports.questions = ['first question'];
+var questions = exports.questions = ['first question', 'second question', 'question 3', 'question 4', 'question 5'];
