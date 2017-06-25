@@ -3,15 +3,21 @@ import { notUnderstood, rejectionMessage, questions } from './responses'
 function talk(currentState, messageText) {
   const userAnswer = messageText.toLowerCase()
   if (currentState === 0 && userAnswer === 'no') {
-    return rejectionMessage
+    return { text: rejectionMessage }
   }
   if (userAnswer === 'yes') {
-    return questions[currentState]
+    return {
+      text: questions[currentState],
+      next: true,
+    }
   }
   if (userAnswer === 'no') {
-    return questions[currentState]
+    return {
+      text: questions[currentState],
+      next: true,
+    }
   }
-  return notUnderstood
+  return { text: notUnderstood }
 }
 
 export default talk

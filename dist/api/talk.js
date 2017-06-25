@@ -9,15 +9,21 @@ var _responses = require('./responses');
 function talk(currentState, messageText) {
   var userAnswer = messageText.toLowerCase();
   if (currentState === 0 && userAnswer === 'no') {
-    return _responses.rejectionMessage;
+    return { text: _responses.rejectionMessage };
   }
   if (userAnswer === 'yes') {
-    return _responses.questions[currentState];
+    return {
+      text: _responses.questions[currentState],
+      next: true
+    };
   }
   if (userAnswer === 'no') {
-    return _responses.questions[currentState];
+    return {
+      text: _responses.questions[currentState],
+      next: true
+    };
   }
-  return _responses.notUnderstood;
+  return { text: _responses.notUnderstood };
 }
 
 exports.default = talk;
