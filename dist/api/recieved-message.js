@@ -33,7 +33,11 @@ function receivedMessage(event) {
     User.findById(senderID, function (err, userObj) {
       if (userObj) {
         var answer = (0, _talk2.default)(userObj.current_state, messageText);
-        User.update({ _id: senderID }, { $set: { current_state: userObj.current_state + 1 } });
+        var nextState = userObj.current_state;
+        console.log({ _id: senderID }, { current_state: nextState });
+        User.update({ _id: senderID }, { current_state: nextState }, function (updateErr, user) {
+          console.log(user);
+        });
         (0, _sendMessage2.default)(senderID, answer);
       } else {
         var user = new User({

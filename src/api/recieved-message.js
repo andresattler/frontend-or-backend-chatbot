@@ -17,7 +17,11 @@ function receivedMessage(event) {
     User.findById(senderID, (err, userObj) => {
       if (userObj) {
         const answer = talk(userObj.current_state, messageText)
-        User.update({ _id: senderID }, { $set: { current_state: userObj.current_state + 1 } })
+        const nextState = userObj.current_state
+        console.log({ _id: senderID }, { current_state: nextState })
+        User.update({ _id: senderID }, { current_state: nextState }, (updateErr, user) => {
+          console.log(user)
+        })
         sendTextMessage(senderID, answer)
       } else {
         const user = new User({
