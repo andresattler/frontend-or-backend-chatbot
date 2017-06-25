@@ -9,4 +9,8 @@ var notUnderstood = exports.notUnderstood = 'Sory I could not understand you';
 
 var rejectionMessage = exports.rejectionMessage = 'Ok then not :) I wish you a nice day!';
 
-var questions = exports.questions = ['first question', 'second question', 'question 3', 'question 4', 'question 5'];
+var questions = exports.questions = [{ text: 'first question', weight: 1 }, { text: 'question 2', weight: 1 }, { text: 'question 3', weight: 1 }, { text: 'question 4', weight: 1 }, { text: 'question 5', weight: 1 }];
+
+var result = exports.result = function result(res) {
+  return 'I think you are more the ' + res + ' guy';
+};

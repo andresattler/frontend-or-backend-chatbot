@@ -7,7 +7,7 @@ import talk from './talk'
 const User = mongoose.model('User', {
   _id: String,
   current_state: Number,
-  answer_history: Array,
+  total: Number,
 })
 
 function receivedMessage(event) {
@@ -17,10 +17,11 @@ function receivedMessage(event) {
   if (messageText) {
     User.findById(senderID, (err, userObj) => {
       if (userObj) {
-        const answer = talk(userObj.current_state, messageText)
+        const answer = talk(userObj.current_state, messageText, userObj.total)
         if (answer.type === 'QUESTION') {
           const nextState = userObj.current_state + 1
-          User.update({ _id: senderID }, { current_state: nextState }).exec()
+          const nextTotal = userObj.total + answer.weight
+          User.update({ _id: senderID }, { current_state: nextState, total: nextTotal }).exec()
         } else if (answer.type === 'END') {
           User.findByIdAndRemove(senderID).exec()
         }
@@ -29,7 +30,7 @@ function receivedMessage(event) {
         const user = new User({
           _id: senderID,
           current_state: 0,
-          answer_history: [],
+          total: 0,
         })
         user.save()
         sendTextMessage(senderID, welcomeMessage)

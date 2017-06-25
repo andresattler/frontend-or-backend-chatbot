@@ -23,7 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var User = _mongoose2.default.model('User', {
   _id: String,
   current_state: Number,
-  answer_history: Array
+  total: Number
 });
 
 function receivedMessage(event) {
@@ -33,10 +33,11 @@ function receivedMessage(event) {
   if (messageText) {
     User.findById(senderID, function (err, userObj) {
       if (userObj) {
-        var answer = (0, _talk2.default)(userObj.current_state, messageText);
+        var answer = (0, _talk2.default)(userObj.current_state, messageText, userObj.total);
         if (answer.type === 'QUESTION') {
           var nextState = userObj.current_state + 1;
-          User.update({ _id: senderID }, { current_state: nextState }).exec();
+          var nextTotal = userObj.total + answer.weight;
+          User.update({ _id: senderID }, { current_state: nextState, total: nextTotal }).exec();
         } else if (answer.type === 'END') {
           User.findByIdAndRemove(senderID).exec();
         }
@@ -45,7 +46,7 @@ function receivedMessage(event) {
         var user = new User({
           _id: senderID,
           current_state: 0,
-          answer_history: []
+          total: 0
         });
         user.save();
         (0, _sendMessage2.default)(senderID, _responses.welcomeMessage);

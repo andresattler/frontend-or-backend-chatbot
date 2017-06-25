@@ -6,9 +6,11 @@ export const notUnderstood = 'Sory I could not understand you'
 export const rejectionMessage = 'Ok then not :) I wish you a nice day!'
 
 export const questions = [
-  'first question',
-  'second question',
-  'question 3',
-  'question 4',
-  'question 5',
+  { text: 'first question', weight: 1 },
+  { text: 'question 2', weight: 1 },
+  { text: 'question 3', weight: 1 },
+  { text: 'question 4', weight: 1 },
+  { text: 'question 5', weight: 1 },
 ]
+
+export const result = res => `I think you are more the ${res} guy`
