@@ -36,17 +36,14 @@ function receivedMessage(event) {
         (0, _sendMessage2.default)(senderID, answer);
       } else {
         var user = new User({
-          _id: event.sender.id,
-          current_state: 0
+          id: event.sender.id,
+          currentState: 0
         });
         user.save();
         (0, _sendMessage2.default)(senderID, _responses.welcomeMessage);
       }
     });
   }
-  // Putting a stub for now, we'll expand it in the following steps
-  // eslint-disable-next-line no-console
-  console.log('Message data: ', event.message);
 }
 
 exports.default = receivedMessage;

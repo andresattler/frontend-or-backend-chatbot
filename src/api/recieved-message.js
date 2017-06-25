@@ -21,16 +21,13 @@ function receivedMessage(event) {
       } else {
         const user = new User({
           id: event.sender.id,
-          current_state: 0,
+          currentState: 0,
         })
         user.save()
         sendTextMessage(senderID, welcomeMessage)
       }
     })
   }
-  // Putting a stub for now, we'll expand it in the following steps
-  // eslint-disable-next-line no-console
-  console.log('Message data: ', event.message)
 }
 
 export default receivedMessage
