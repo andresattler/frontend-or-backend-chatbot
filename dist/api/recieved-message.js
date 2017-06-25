@@ -33,11 +33,11 @@ function receivedMessage(event) {
     User.findById(senderID, function (err, userObj) {
       if (userObj) {
         var answer = (0, _talk2.default)(userObj.current_state, messageText);
+        User.update({ _id: senderID }, { $set: { current_state: userObj.current_state + 1 } });
         (0, _sendMessage2.default)(senderID, answer);
-        User.update({ _id: senderID }, { current_state: userObj.current_state + 1 });
       } else {
         var user = new User({
-          _id: event.sender.id,
+          _id: senderID,
           current_state: 0
         });
         user.save();
