@@ -19,8 +19,6 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
-    "babel-loader": "^7.0.0",
-    "babel-preset-env": "^1.5.2",
     "babel-preset-latest": "^6.24.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
@@ -30,6 +28,5 @@
     "husky": "^0.13.4",
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",
-    "webpack": "^2.6.1"
   }
 }
